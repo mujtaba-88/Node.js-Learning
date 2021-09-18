@@ -1,0 +1,33 @@
+// Blocking, synchoronous Way
+
+const fs = require('fs');
+const textIn = fs.readFileSync('index.txt', 'utf8');
+console.log(textIn);
+
+// The new file is created automatically by this code
+const textOut = `This is what we know about content ${textIn}. /n Created on ${Date.now()}`;
+fs.writeFileSync('output.txt', textOut);
+console.log('File Written');
+
+// Non blocking, asnchoronou Way
+fs.readFile('start.txt', 'utf-8', (err, data) => { //Call back function.
+console.log(data);
+});
+console.log('Will Read File');
+
+console.log('New Code');
+// Multiple Callback.
+fs.readFile('start.txt', 'utf-8', (err, data1) => { 
+  //  fs.readFile( `${data1}`, 'utf-8' (err, data2) => { 
+     console.log(data1);
+ fs.readFile('append.txt', 'utf-8', (err, data3) => { 
+ console.log(data3);
+   
+    fs.writeFile('final.txt', `${data1}\n$[data3}`, 'utf-8', err => {
+      console.log('Your file is written.')
+    })
+
+       });
+    // });
+});
+console.log('Will Read File');
