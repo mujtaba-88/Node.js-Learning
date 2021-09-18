@@ -1,0 +1,68 @@
+// Blocking, synchoronous Way
+
+  const fs = require('fs');
+  const http = require('http');
+  const url = require('url');
+
+  // // const textIn = fs.readFileSync('index.txt', 'utf8');
+// // console.log(textIn);
+
+// ////////////////////////////////////////////////////
+// //////////FILES
+
+// // // The new file is created automatically by this code
+// // const textOut = `This is what we know about content ${textIn}. /n Created on ${Date.now()}`;
+// // fs.writeFileSync('output.txt', textOut);
+// // console.log('File Written');
+
+// // Non blocking, asnchoronou Way
+// fs.readFile('start.txt', 'utf-8', (err, data) => { //Call back function.
+// console.log(data);
+// });
+// console.log('Will Read File');
+
+// console.log('New Code');
+// // Multiple Callback.
+// fs.readFile('start.txt', 'utf-8', (err, data1) => { 
+//   //  fs.readFile( `${data1}`, 'utf-8' (err, data2) => { 
+//      console.log(data1);
+//  fs.readFile('append.txt', 'utf-8', (err, data3) => { 
+//  console.log(data3);
+   
+//     fs.writeFile('final.txt', `${data1}\n$[data3}`, 'utf-8', err => {
+//       console.log('Your file is written.')
+//     })
+
+//        });
+//     // });
+// });
+// console.log('Will Read File');
+
+
+////////////////////////////////////////////////////
+//////////SERVER
+const server = http.createServer((req,res) => { //req = request //res = response
+console.log(req.url);
+
+const pathName = req.url;
+// Implementing routing by using if else statments.
+if(pathName === '/overview'){
+  res.end('Hello from the overview');
+} else if (pathName === '/product')
+  res.end('Hello from the product');
+  else {
+    // A HTTP header is basically a pience of header about the response that we are sending back.
+    // Always send header before the response code(res.end)
+    res.writeHead(404, {
+      'Content-type': 'text/html'
+    });
+    res.end('<h1>Page Not Found</h1>');
+  }
+});
+
+server.listen(8000, '127.0.0.1', () => {
+  console.log('listening on port 8000');
+});
+
+
+// The routes that we are defined here have nothing to do with file and folders that are defined in project file system.
